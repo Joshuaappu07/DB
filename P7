@@ -1,0 +1,58 @@
+a) AirbnblistingsAndReviews
+{ 
+"listing_url": "http://example.com/listing1", 
+"name": "BeautifulApartment in the City", 
+"address": { "city": "New York", "country": "USA" }, 
+"host": { "host_picture_url": "http://example.com/host1.jpg" } 
+}
+{ 
+"listing_url": "http://example.com/listing2", 
+"name": "Cozy Cottage", 
+"address": { "city": "Austin", "country": "USA" }, 
+"host": { "host_picture_url": "http://example.com/host2.jpg" } 
+}
+In MongoDB Shell 
+>useAirbnb
+db.listingsAndReviews.aggregate( [{ $match: { "host.host_picture_url": { $exists: true, $ne: null } } },{listing_url: 1,$project: { address: 1,name: 1,host_picture_url: "$host.host_picture_url" }}])                                                                                                                    
+ Output:
+
+
+
+
+
+b) CommerceDBreviews
+{
+"product_id": 1, 
+"product_name": "Wireless Mouse", 
+"review_id": 101, 
+"review_text": "Great mouse, very responsive.",
+"rating": 5
+}
+{
+"product_id": 1, 
+"product_name": "Wireless Mouse", 
+"review_id": 102, 
+"review_text": "Good value for the price.",
+"rating": 4
+}
+{
+"product_id": 2, 
+"product_name": "Bluetooth Keyboard",
+"review_id": 202, 
+"review_text": "Compact and portable.",
+"rating": 4
+}
+{
+"product_id": 3, 
+"product_name": "USB-C Hub", 
+"review_id": 302, 
+"review_text": "Works well with my laptop.",
+"rating": 5
+}
+
+
+
+In MongoShell 
+>use CommerceDB 
+>db.reviews.aggregate([ {$group: {_id: "$product_id",product_name: { $first: "$product_name" },total_reviews: { $sum: 1 },{ $avg: "$rating" },average_rating: latest_reviews: {$push: {review_id: "$review_id",review_text: "$review_text",rating: "$rating",}}}},{product_id: "$_id",$project: { product_name: 1,total_reviews: 1,average_rating: "$average_rating",latest_reviews: {$slice: ["$latest_reviews", -3] }}},{$sort: { total_reviews: -1 }} ])                                                                                                                         
+Output:
