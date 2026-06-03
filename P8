@@ -1,0 +1,30 @@
+IndexDBusers
+In MongoShell 
+db.users.insert({
+username: "John", age: 
+30, city:"Chennai", 
+"interests":["music","garden"], 
+Description:["good","avg","excellent"], 
+"hashedField": "hashedValue1", 
+"location": { "type": "Point", "coordinates": [ -73.97, 40.77 ] }, 
+"createdAt": ISODate("2023-01-01T00:00:00Z") }) 
+1.Unique index: 
+db.users.createIndex({ "username": 1 }, { unique: true })               
+Output:
+2.Sparse Index: 
+db.users.createIndex({ "city": 1 }, { sparse: true })                            
+Output:
+3.Compound Index: 
+db.users.createIndex({ “username”: 1, “age”: 1 })                              
+Output:
+4.Multikey Index 
+db.users.createIndex({ "interests": 1 })                                                  
+Output:
+db.users.createIndex( { description: "text" } )                                     
+Output:
+db. users.createIndex({ city: "hashed" })                                               
+Output:
+db. users.createIndex({ location: "2dsphere" })                                 
+Output:
+db. users.createIndex({ createdAt: 1 }, { expireAfterSeconds: 3600 })                                                                                                                                      
+Output:
