@@ -1,0 +1,70 @@
+Program 9
+CatalogDBproducts
+{
+"name": "Apple iPhone 14", 
+"description": "Latest model of iPhone with advanced features",
+"category": "Electronics"
+}
+{
+"name": "Samsung Galaxy S21",
+"description": "Newest Samsung smartphone with great camera",
+"category": "Electronics"
+} 
+{
+"name": "Sony Headphones", 
+"description": "Noise-cancelling headphones for immersive sound",
+"category": "Audio"
+}
+"name": "Dell Laptop", 
+"description": "High performance laptop for work and play",
+"category": "Computers"
+{ 
+}
+In MongoShell 
+>use CatalogDB 
+a. 1. Create a Text Index
+db.products.createIndex({ name: "text", description: "text" })                                        
+Output:
+2. Perform a Text Search 
+db.products.find({ $text: { $search: "latest" } })                              
+Output:
+db.products.find({ $text: { $search: "High performance" } })                                                
+Output:
+
+
+
+b. Develop queries to illustrate excluding documents with certain words and phrases. 
+Add the following documents in the collection articles in MongoDB IDE. 
+{
+"_id": 1, 
+"title": "MongoDB Basics", 
+"content": "This article explains the basics of MongoDB."
+}
+{
+"_id": 2, 
+"title": "Advanced MongoDB", 
+"content": "This article covers advanced MongoDB topics."
+}
+{ 
+"_id": 3, 
+"title": "MongoDB Indexes", 
+"content": "Indexes in MongoDB can improve query performance."
+}
+{
+"_id": 4,
+"title": "Introduction to Databases", 
+"content": "This article gives an introduction to databases in general."
+}
+In MongoShell 
+1.Exclude Documents Containing a Specific Word 
+db.articles.find({ "content": { $not: /advanced/ } })                                                                                                                          
+Output:
+2.Exclude Documents ContainingAny of Multiple Words 
+db.articles.find({"content": { $not: /(improve|performance)/ } })                                                                                                                            
+Output:
+3.Exclude Documents Containing a Specific Phrase 
+db.articles.find({"title": { $not: /MongoDB Basics/ }})                                                                                                                             
+Output:
+4.Exclude Documents Based on Multiple Fields 
+db.articles.find({$and: [{ "title": { $not: /MongoDB/ } }, { "content": { $not: /advanced/ } }]})                                                                                                                          
+Output:
