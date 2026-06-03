@@ -1,0 +1,22 @@
+Textcatalog
+{ 
+"name": "Apple iPhone 14", 
+"descripton": "Latest model of iPhone with advanced features", 
+"category": "Electronics" 
+} 
+{ 
+"name": "Samsung Galaxy S21", 
+"descripton": "Newest Samsung smartphone with great camera", 
+"category": "Electronics" 
+} 
+{ 
+"name": "Sony Headphones", 
+"descripton": "Noise-cancelling headphones for immersive sound", 
+"category": "Audio" 
+} 
+In MongoShell
+>use TextDB
+db.catalog.createIndex({ name: "text", descripton: "text" });                                                                                                                                                                           
+Output: 
+db.catalog.aggregate([ { $match: { $text: { $search: " Apple iPhone 14" } } }, { $project: { _id: 0, name: 1, descripton: 1, category: 1 } } ])                                                                                                                          
+Output: 
