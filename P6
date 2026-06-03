@@ -1,0 +1,36 @@
+Academics1students
+{
+"name": "Jayanth ",
+"age": 20, 
+"grade": "A", 
+"scores": { "math": 85, "english": 92, "science": 88 }
+}
+{
+"name": "Janaki", 
+"age": 22, 
+"grade": "B", 
+"scores": { "math": 78, "english": 85, "science": 80 }
+}
+{
+"name": "Amit",
+"age": 21,
+"grade": "A", 
+"scores": { "math": 92, " english": 90, "science": 91 }
+}
+{ 
+"name": "Baskhar", 
+"age": 23, 
+"grade": "C", 
+"scores": {" math": 65, "english": 70, "science": 72 }
+}
+{ 
+"name": "Chaitra", 
+"age": 20, 
+"grade": "B", 
+"scores": { "math": 80, "english": 75, "science": 78 }
+}
+
+
+In MongoDB shell
+>useAcademics1
+>db.students.aggregate([{$match: { age: { $gte: 21 } }},{$group: {_id: "$grade",averageAge: { $avg: "$age" }} }, {$sort: { averageAge: -1 }},{$project: {grade: _id: 0,"$_id",averageAge: 1}}, {$skip: 1 }])                                                                                                                   
